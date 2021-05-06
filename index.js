@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const mongoose = require('mongoose')
+const passport = require('passport')
 
 const app = express()
 
@@ -19,6 +20,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/nodejs_prac', {
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
+app.use(passport.initialize())
 
 const PORT = 4000
 

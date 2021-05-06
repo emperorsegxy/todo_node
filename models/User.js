@@ -28,6 +28,14 @@ userSchema.statics.createUser = async function (newUser) {
     }
 }
 
+userSchema.statics.comparePassword = async function (userPassword, encryptedPassword) {
+    try {
+        return await bcryptjs.compare(userPassword, encryptedPassword)
+    } catch (e) {
+        throw e
+    }
+}
+
 const User = model('User', userSchema)
 
 module.exports = User
