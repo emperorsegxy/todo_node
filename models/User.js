@@ -4,7 +4,9 @@ const bcryptjs = require('bcryptjs');
 const {Schema, model} = mongoose
 
 const userSchema = new Schema({
-    name: String,
+    first_name: String,
+    last_name: String,
+    phone_number: String,
     email: String,
     password: String,
     dateCreated: {
@@ -16,11 +18,10 @@ const userSchema = new Schema({
 userSchema.statics.createUser = async function (newUser) {
     try {
         const salt = await bcryptjs.genSalt(10)
-        console.log(salt)
         const hash = await bcryptjs.hash(newUser.password, salt)
         const hashedNewUser = newUser
         hashedNewUser.password = hash
-        console.log(hashedNewUser)
+        console.log('::New user password successfully hashed')
         return hashedNewUser.save()
     } catch (e) {
         console.log(e)
