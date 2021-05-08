@@ -3,7 +3,8 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const mongoose = require('mongoose')
-const passport = require('passport')
+const passport = require('passport');
+const cors = require('cors')
 
 const app = express()
 
@@ -13,13 +14,15 @@ mongoose.connect('mongodb://127.0.0.1:27017/nodejs_prac', {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true
-}).then(() => console.log('secured'))
-// mongoose.onerror((e) => console.log(e, 'o ti sele oooo.'))
-// mongoose.once(() => console.log('database connection is secured'))
+}).then(() => console.log('secured')).catch(e => {
+    console.log('::Error! Couldn\'t secure database connection', {error: e})
+    process.exit(1)
+})
 
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+app.use(cors())
 
 app.use(passport.initialize())
 
